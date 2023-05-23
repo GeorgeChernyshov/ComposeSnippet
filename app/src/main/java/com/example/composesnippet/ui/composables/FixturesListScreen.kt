@@ -1,6 +1,6 @@
 package com.example.composesnippet.ui.composables
 
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -15,17 +15,17 @@ fun FixturesListScreen(uiState: FixturesListItemUiState?) {
     ComposeSnippetTheme {
         // A surface container using the 'background' color from the theme
         Surface(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            uiState?.let { FixtureItem(it) }
+            uiState?.let {
+                Column(Modifier.fillMaxWidth()) {
+                    FixtureItem(it)
+                }
+            }
         }
     }
-}
-
-@Composable
-fun FixtureItem(uiState: FixturesListItemUiState) {
-    Text(text = uiState.homeTeamName)
 }
 
 @Composable

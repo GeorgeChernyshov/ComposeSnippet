@@ -3,6 +3,7 @@ package com.example.composesnippet.viewmodels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.composesnippet.data.repository.FixtureListRepository
+import com.example.composesnippet.ui.uistate.fixtures.FixturesListItemTeamUiState
 import com.example.composesnippet.ui.uistate.fixtures.FixturesListItemUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -17,8 +18,18 @@ class FixturesListViewModel @Inject constructor(
         val model = fixtureListRepository.getFirstFixture()
         return model?.let {
             FixturesListItemUiState(
-                it.teams.home.name,
-                it.teams.away.name
+                FixturesListItemTeamUiState(
+                    it.teams.home.name,
+                    it.goals.home,
+                    it.teams.home.winner,
+                    it.teams.home.logo
+                ),
+                FixturesListItemTeamUiState(
+                    it.teams.away.name,
+                    it.goals.away,
+                    it.teams.away.winner,
+                    it.teams.away.logo
+                )
             )
         }
     }
