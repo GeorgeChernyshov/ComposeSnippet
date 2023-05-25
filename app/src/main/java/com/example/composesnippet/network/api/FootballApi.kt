@@ -4,6 +4,7 @@ import com.example.composesnippet.network.model.fixtures.FixturesResponse
 import com.example.composesnippet.network.model.status.StatusModel
 import com.example.composesnippet.network.model.status.StatusResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.Date
 
@@ -14,7 +15,6 @@ interface FootballApi {
 
     @GET("fixtures")
     suspend fun getFixtures(
-        @Query("id") id: Int? = null,
         @Query("ids") ids: String? = null,
         @Query("live") live: String? = null,
         @Query("date") date: Date? = null,
@@ -28,5 +28,10 @@ interface FootballApi {
         @Query("round") round: String? = null,
         @Query("venue") venue: Int? = null,
         @Query("timezone") timezone: String? = null
+    ): FixturesResponse
+
+    @GET("fixtures")
+    suspend fun getFixtureDetails(
+        @Query("id") id: Int,
     ): FixturesResponse
 }

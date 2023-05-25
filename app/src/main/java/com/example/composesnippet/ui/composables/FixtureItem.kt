@@ -24,7 +24,7 @@ fun FixtureItem(uiState: FixturesListItemUiState) {
         modifier = Modifier
             .wrapContentHeight()
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp, 8.dp),
         shape = Shapes.medium,
         color = MaterialTheme.colors.surface
     ) {
@@ -76,7 +76,7 @@ fun FixtureItem(uiState: FixturesListItemUiState) {
                     start.linkTo(topDelimeter.end, 4.dp)
                 },
                 text = uiState.away.name,
-                fontWeight = boldIfWinner(uiState.home)
+                fontWeight = boldIfWinner(uiState.away)
             )
             Text(
                 modifier = Modifier.constrainAs(homeScore) {
@@ -84,7 +84,7 @@ fun FixtureItem(uiState: FixturesListItemUiState) {
                     end.linkTo(bottomDelimeter.start, 4.dp)
                 },
                 text = uiState.home.score.toString(),
-                fontWeight = boldIfWinner(uiState.away)
+                fontWeight = boldIfWinner(uiState.home)
             )
             Text(
                 modifier = Modifier.constrainAs(bottomDelimeter) {

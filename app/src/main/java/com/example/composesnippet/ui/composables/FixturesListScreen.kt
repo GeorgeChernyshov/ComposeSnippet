@@ -1,31 +1,20 @@
 package com.example.composesnippet.ui.composables
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.composesnippet.ui.theme.ComposeSnippetTheme
-import com.example.composesnippet.ui.uistate.fixtures.FixturesListItemUiState
+import com.example.composesnippet.viewmodels.FixturesListViewModel
 
 @Composable
-fun FixturesListScreen(uiState: FixturesListItemUiState?) {
-    ComposeSnippetTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(
-            modifier = Modifier
-                .fillMaxSize(),
-            color = MaterialTheme.colors.background
-        ) {
-            uiState?.let {
-                Column(Modifier.fillMaxWidth()) {
-                    FixtureItem(it)
-                }
-            }
-        }
-    }
+fun FixturesListScreen(
+    viewModel: FixturesListViewModel = hiltViewModel()
+) {
+    val state by viewModel.state.collectAsState()
+    FixturesList(uiState = state)
 }
 
 @Composable
