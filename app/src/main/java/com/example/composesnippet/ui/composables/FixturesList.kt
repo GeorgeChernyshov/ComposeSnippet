@@ -12,7 +12,10 @@ import com.example.composesnippet.ui.theme.ComposeSnippetTheme
 import com.example.composesnippet.ui.uistate.fixtures.FixturesListUiState
 
 @Composable
-fun FixturesList(uiState: FixturesListUiState) {
+fun FixturesList(
+    uiState: FixturesListUiState,
+    onItemClick: (Int) -> Unit
+) {
     ComposeSnippetTheme {
         // A surface container using the 'background' color from the theme
         Surface(
@@ -22,7 +25,7 @@ fun FixturesList(uiState: FixturesListUiState) {
         ) {
             LazyColumn(Modifier.fillMaxWidth()) {
                 items(uiState.fixtures) { item ->
-                    FixtureItem(item)
+                    FixtureItem(item, onItemClick)
                 }
             }
         }

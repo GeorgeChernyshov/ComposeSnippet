@@ -1,5 +1,6 @@
 package com.example.composesnippet.ui.composables
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -19,12 +20,16 @@ import com.example.composesnippet.ui.uistate.fixtures.FixturesListItemUiState
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun FixtureItem(uiState: FixturesListItemUiState) {
+fun FixtureItem(
+    uiState: FixturesListItemUiState,
+    onItemClick: (Int) -> Unit
+) {
     Surface(
         modifier = Modifier
             .wrapContentHeight()
             .fillMaxWidth()
-            .padding(16.dp, 8.dp),
+            .padding(16.dp, 8.dp)
+            .clickable { onItemClick.invoke(uiState.home.score) },
         shape = Shapes.medium,
         color = MaterialTheme.colors.surface
     ) {

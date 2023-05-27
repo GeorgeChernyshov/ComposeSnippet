@@ -14,7 +14,9 @@ fun FixturesListScreen(
     viewModel: FixturesListViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
-    FixturesList(uiState = state)
+    FixturesList(uiState = state) {
+        viewModel.navigateToDetailsScreen(it)
+    }
 }
 
 @Composable

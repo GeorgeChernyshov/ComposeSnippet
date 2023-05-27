@@ -6,8 +6,6 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
-import com.example.composesnippet.ui.navigation.Destinations
-import com.example.composesnippet.ui.navigation.FixtureSections
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -46,14 +44,14 @@ class AppState(val navController: NavHostController) {
         return if (graph is NavGraph) findStartDestination(graph.startDestination!!) else graph
     }
 
-    fun navigateToFixtureDetails(id: Int, from: NavBackStackEntry) {
-        if (from.lifecycleIsResumed()) {
-            navigateModel(
-                route = FixtureSections.FIXTURE_DETAILS.route,
-                model = id
-            )
-        }
-    }
+//    fun navigateToFixtureDetails(id: Int, from: NavBackStackEntry) {
+//        if (from.lifecycleIsResumed()) {
+//            navigateModel(
+//                route = FixtureSections.FIXTURE_DETAILS.route,
+//                model = id
+//            )
+//        }
+//    }
 
     inline fun <reified T : Any> navigateModel(route: String, model: T) {
         val json = Json.encodeToString(model)

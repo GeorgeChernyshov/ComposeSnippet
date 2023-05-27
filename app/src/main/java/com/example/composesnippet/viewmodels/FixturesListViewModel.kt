@@ -1,9 +1,10 @@
 package com.example.composesnippet.viewmodels
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composesnippet.data.repository.FixtureListRepository
+import com.example.composesnippet.ui.navigation.FixtureDetailsNavigation
+import com.example.composesnippet.ui.navigation.NavigationManager
 import com.example.composesnippet.ui.uistate.fixtures.FixturesListItemTeamUiState
 import com.example.composesnippet.ui.uistate.fixtures.FixturesListItemUiState
 import com.example.composesnippet.ui.uistate.fixtures.FixturesListUiState
@@ -16,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FixturesListViewModel @Inject constructor(
     private val fixtureListRepository: FixtureListRepository,
+    private val navigationManager: NavigationManager
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(FixturesListUiState(emptyList()))
@@ -66,4 +68,7 @@ class FixturesListViewModel @Inject constructor(
             )
         }
     }
+
+    fun navigateToDetailsScreen(fixtureId: Int) = navigationManager
+        .navigate(FixtureDetailsNavigation.details(fixtureId))
 }
