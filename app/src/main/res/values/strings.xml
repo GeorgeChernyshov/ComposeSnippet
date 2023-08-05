@@ -2,4 +2,9 @@
     <string name="app_name">Compose Snippet</string>
     <string name="home_logo_description">Home team logo</string>
     <string name="away_logo_description">Guest team logo</string>
+
+    <!-- Screen labels -->
+    <string name="label_fixtures">fixtures</string>
+    <string name="label_teams">teams</string>
+    <string name="label_tournaments">tournaments</string>
 </resources>

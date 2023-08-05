@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composesnippet.data.repository.FixtureListRepository
 import com.example.composesnippet.ui.navigation.FixtureDetailsNavigation
+import com.example.composesnippet.ui.navigation.FixtureListNavigation
 import com.example.composesnippet.ui.navigation.NavigationManager
+import com.example.composesnippet.ui.uistate.AppState
 import com.example.composesnippet.ui.uistate.fixtures.FixturesListItemTeamUiState
 import com.example.composesnippet.ui.uistate.fixtures.FixturesListItemUiState
 import com.example.composesnippet.ui.uistate.fixtures.FixturesListUiState
