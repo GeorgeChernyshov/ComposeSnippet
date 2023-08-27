@@ -1,5 +1,8 @@
 package com.example.composesnippet.ui.composables
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Scaffold
@@ -8,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -35,40 +39,13 @@ fun App(navigationManager: NavigationManager) {
             Screen.Teams,
             Screen.Tournaments
         )
-        
-        Scaffold(
-            bottomBar = {
-                BottomNavigation {
-                    val navBackStackEntry by appState.navController.currentBackStackEntryAsState()
-                    val currentDestination = navBackStackEntry?.destination
-                    items.forEach { screen ->
-                        BottomNavigationItem(
-                            icon = {},
-                            label = { Text(stringResource(id = screen.resourceId)) },
-                            selected = currentDestination?.hierarchy
-                                ?.any { it.route == screen.route }
-                                ?: false,
-                            onClick = {
-                                appState.navController.navigate(screen.route) {
-                                    // Pop up to the start destination of the graph to
-                                    // avoid building up a large stack of destinations
-                                    // on the back stack as users select items
-                                    popUpTo(appState.navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    // Avoid multiple copies of the same destination when
-                                    // reselecting the same item
-                                    launchSingleTop = true
-                                    // Restore state when reselecting a previously selected item
-                                    restoreState = true
-                                }
-                            }
-                        )
-                    }
-                }
-            }
+
+        Column(
+            Modifier.fillMaxHeight()
+                .fillMaxWidth()
         ) {
             NavHost(
+                modifier = Modifier.weight(1f),
                 navController = appState.navController,
                 startDestination = Screen.Fixtures.route
             ) {
@@ -81,6 +58,35 @@ fun App(navigationManager: NavigationManager) {
 
                 composable(Screen.Teams.route) { TeamsListScreen() }
                 composable(Screen.Tournaments.route) { TournamentsListScreen() }
+            }
+
+            BottomNavigation {
+                val navBackStackEntry by appState.navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
+                items.forEach { screen ->
+                    BottomNavigationItem(
+                        icon = {},
+                        label = { Text(stringResource(id = screen.resourceId)) },
+                        selected = currentDestination?.hierarchy
+                            ?.any { it.route == screen.route }
+                            ?: false,
+                        onClick = {
+                            appState.navController.navigate(screen.route) {
+                                // Pop up to the start destination of the graph to
+                                // avoid building up a large stack of destinations
+                                // on the back stack as users select items
+                                popUpTo(appState.navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                // Avoid multiple copies of the same destination when
+                                // reselecting the same item
+                                launchSingleTop = true
+                                // Restore state when reselecting a previously selected item
+                                restoreState = true
+                            }
+                        }
+                    )
+                }
             }
         }
 

@@ -17,7 +17,7 @@ interface FootballApi {
     suspend fun getFixtures(
         @Query("ids") ids: String? = null,
         @Query("live") live: String? = null,
-        @Query("date") date: Date? = null,
+        @Query("date") date: String? = null,
         @Query("league") league: Int? = null,
         @Query("season") season: Int? = null,
         @Query("team") team: Int? = null,

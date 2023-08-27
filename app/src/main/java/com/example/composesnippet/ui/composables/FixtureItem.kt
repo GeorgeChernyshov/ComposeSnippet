@@ -1,5 +1,6 @@
 package com.example.composesnippet.ui.composables
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -7,8 +8,11 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -33,91 +37,75 @@ fun FixtureItem(
         shape = Shapes.medium,
         color = MaterialTheme.colors.surface
     ) {
-        ConstraintLayout(
-            Modifier.fillMaxWidth().padding(16.dp, 8.dp)
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp, 8.dp)
         ) {
-            val (
-                homeLogo,
-                homeName,
-                topDelimeter,
-                awayName,
-                homeScore,
-                bottomDelimeter,
-                awayScore,
-                awayLogo
-            ) = createRefs()
-
             GlideImage(
                 model = uiState.home.logo,
                 contentDescription = LocalContext.current.getString(R.string.home_logo_description),
-                modifier = Modifier.width(40.dp)
+                modifier = Modifier
+                    .width(40.dp)
                     .height(40.dp)
-                    .constrainAs(homeLogo) {
-                        start.linkTo(parent.start)
-                        top.linkTo(parent.top)
-                        bottom.linkTo(parent.bottom)
-                    }
             )
 
-            Text(
-                modifier = Modifier.constrainAs(homeName) {
-                    top.linkTo(parent.top)
-                    end.linkTo(topDelimeter.start, 4.dp)
-                },
-                text = uiState.home.name,
-                fontWeight = boldIfWinner(uiState.home)
-            )
-            Text(
-                modifier = Modifier.constrainAs(topDelimeter) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
-                text = "-"
-            )
-            Text(
-                modifier = Modifier.constrainAs(awayName) {
-                    top.linkTo(parent.top)
-                    start.linkTo(topDelimeter.end, 4.dp)
-                },
-                text = uiState.away.name,
-                fontWeight = boldIfWinner(uiState.away)
-            )
-            Text(
-                modifier = Modifier.constrainAs(homeScore) {
-                    top.linkTo(topDelimeter.bottom, 4.dp)
-                    end.linkTo(bottomDelimeter.start, 4.dp)
-                },
-                text = uiState.home.score.toString(),
-                fontWeight = boldIfWinner(uiState.home)
-            )
-            Text(
-                modifier = Modifier.constrainAs(bottomDelimeter) {
-                    top.linkTo(topDelimeter.bottom, 4.dp)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
-                text = "-"
-            )
-            Text(
-                modifier = Modifier.constrainAs(awayScore) {
-                    top.linkTo(topDelimeter.bottom, 4.dp)
-                    start.linkTo(bottomDelimeter.end, 4.dp)
-                },
-                text = uiState.away.score.toString(),
-                fontWeight = boldIfWinner(uiState.away)
-            )
+            Column(
+                Modifier
+                    .weight(1f)
+                    .padding(horizontal = 16.dp)
+            ) {
+                Row {
+                    Text(
+                        modifier = Modifier.weight(1f),
+                        fontWeight = boldIfWinner(uiState.home),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        text = uiState.home.name,
+                        textAlign = TextAlign.End
+                    )
+
+                    Text(
+                        modifier = Modifier.padding(horizontal = 4.dp),
+                        text = "-"
+                    )
+
+                    Text(
+                        modifier = Modifier.weight(1f),
+                        fontWeight = boldIfWinner(uiState.away),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        text = uiState.away.name
+                    )
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = uiState.home.score.toString(),
+                        fontWeight = boldIfWinner(uiState.home)
+                    )
+
+                    Text(
+                        modifier = Modifier.padding(horizontal = 4.dp),
+                        text = "-"
+                    )
+
+                    Text(
+                        text = uiState.away.score.toString(),
+                        fontWeight = boldIfWinner(uiState.away)
+                    )
+                }
+            }
 
             GlideImage(
                 model = uiState.away.logo,
                 contentDescription = LocalContext.current.getString(R.string.away_logo_description),
-                modifier = Modifier.width(40.dp)
+                modifier = Modifier
+                    .width(40.dp)
                     .height(40.dp)
-                    .constrainAs(awayLogo) {
-                        top.linkTo(parent.top)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                    }
             )
         }
     }

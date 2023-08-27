@@ -14,7 +14,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
+import kotlin.time.toTimeUnit
 
 @HiltViewModel
 class FixturesListViewModel @Inject constructor(
@@ -22,38 +28,36 @@ class FixturesListViewModel @Inject constructor(
     private val navigationManager: NavigationManager
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(FixturesListUiState(emptyList()))
+    private val _state = MutableStateFlow(FixturesListUiState.DEFAULT)
     val state: StateFlow<FixturesListUiState> = _state
 
-    init {
-        viewModelScope.launch { _state.emit(getFixtures()) }
+
+    private var date = Date()
+
+    suspend fun reload() {
+        date = Date()
+
+        _state.emit(state.value.copy(
+            fixtures = emptyList(),
+            isLoading = false,
+            allElements = false
+        ))
+
+        getFixtures()
     }
 
-    suspend fun getFixtures(): FixturesListUiState {
-        val items = fixtureListRepository.getFixtures()
-            .map {
-                FixturesListItemUiState(
-                    FixturesListItemTeamUiState(
-                        it.teams.home.name,
-                        it.goals.home,
-                        it.teams.home.winner,
-                        it.teams.home.logo
-                    ),
-                    FixturesListItemTeamUiState(
-                        it.teams.away.name,
-                        it.goals.away,
-                        it.teams.away.winner,
-                        it.teams.away.logo
-                    )
-                )
-            }
+    suspend fun getFixtures() {
+        if (state.value.isLoading || state.value.allElements)
+            return
 
-        return FixturesListUiState(items)
-    }
+        _state.emit(state.value.copy(
+            isLoading = true
+        ))
 
-    suspend fun getFirstFixture(): FixturesListItemUiState? {
-        val model = fixtureListRepository.getFirstFixture()
-        return model?.let {
+        val newItems = fixtureListRepository.getFixtures(
+            SimpleDateFormat("yyyy-MM-dd", Locale.US)
+                .format(date)
+        ).map {
             FixturesListItemUiState(
                 FixturesListItemTeamUiState(
                     it.teams.home.name,
@@ -69,7 +73,36 @@ class FixturesListViewModel @Inject constructor(
                 )
             )
         }
+
+        if (newItems.isNotEmpty())
+            date = Date(date.time - DurationUnit.DAYS.toTimeUnit().toMillis(1))
+
+        _state.emit(state.value.copy(
+            fixtures = state.value.fixtures + newItems,
+            isLoading = false,
+            allElements = newItems.isEmpty()
+        ))
     }
+
+//    suspend fun getFirstFixture(): FixturesListItemUiState? {
+//        val model = fixtureListRepository.getFirstFixture()
+//        return model?.let {
+//            FixturesListItemUiState(
+//                FixturesListItemTeamUiState(
+//                    it.teams.home.name,
+//                    it.goals.home,
+//                    it.teams.home.winner,
+//                    it.teams.home.logo
+//                ),
+//                FixturesListItemTeamUiState(
+//                    it.teams.away.name,
+//                    it.goals.away,
+//                    it.teams.away.winner,
+//                    it.teams.away.logo
+//                )
+//            )
+//        }
+//    }
 
     fun navigateToDetailsScreen(fixtureId: Int) = navigationManager
         .navigate(FixtureDetailsNavigation.details(fixtureId))

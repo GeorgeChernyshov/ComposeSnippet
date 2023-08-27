@@ -8,14 +8,14 @@ class FixtureListRepository @Inject constructor(
     private val footballApi: FootballApi
 ) {
 
-    suspend fun getFixtures() : List<FixtureModel> {
+    suspend fun getFixtures(date: String) : List<FixtureModel> {
         val a = footballApi.getFixtures(
-            live = "all"
+            date = date,
         )
-        return a.response
+        return a.response.filter { it.league.id.mod(10) == 1 }
     }
 
-    suspend fun getFirstFixture() : FixtureModel? {
-        return getFixtures().firstOrNull()
-    }
+//    suspend fun getFirstFixture() : FixtureModel? {
+//        return getFixtures().firstOrNull()
+//    }
 }
