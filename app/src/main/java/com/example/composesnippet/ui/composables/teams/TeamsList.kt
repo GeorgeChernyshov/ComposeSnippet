@@ -1,4 +1,4 @@
-package com.example.composesnippet.ui.composables
+package com.example.composesnippet.ui.composables.teams
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,17 +14,18 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import com.example.composesnippet.ui.composables.common.LoaderItem
+import com.example.composesnippet.ui.composables.fixtures.FixtureItem
+import com.example.composesnippet.ui.composables.fixtures.OnBottomReached
 import com.example.composesnippet.ui.theme.ComposeSnippetTheme
-import com.example.composesnippet.ui.uistate.fixtures.FixturesListUiState
+import com.example.composesnippet.ui.uistate.teams.TeamsListUiState
 
 @Composable
-fun FixturesList(
-    uiState: FixturesListUiState,
-    onScrolled: () -> Unit,
-    onItemClick: (Int) -> Unit
+fun TeamsList(
+    uiState: TeamsListUiState,
+    onScrolled: () -> Unit
 ) {
     ComposeSnippetTheme {
-        // A surface container using the 'background' color from the theme
         Surface(
             modifier = Modifier
                 .fillMaxSize(),
@@ -36,12 +37,12 @@ fun FixturesList(
                 state = listState
             ) {
                 val items = if (uiState.isLoading)
-                    uiState.fixtures + null
-                else uiState.fixtures
+                    uiState.teams + null
+                else uiState.teams
 
                 items(items) { item ->
                     item?.let {
-                        FixtureItem(it, onItemClick)
+                        TeamItem(it)
                     } ?: LoaderItem()
                 }
             }

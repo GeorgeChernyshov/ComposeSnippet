@@ -22,7 +22,7 @@ import com.example.composesnippet.viewmodels.AppBarViewModel
 @Composable
 fun AppBar(
     uiState: AppBarUiState,
-    viewModel: AppBarViewModel = hiltViewModel()
+    onBackPressed: () -> Unit
 ) {
     Row(
         modifier = Modifier.background(MaterialTheme.colors.primary)
@@ -33,7 +33,7 @@ fun AppBar(
         Icon(
             modifier = Modifier
                 .padding(8.dp)
-                .clickable { viewModel.navigateUp() },
+                .clickable { onBackPressed.invoke() },
             imageVector = Icons.Outlined.ArrowBack,
             contentDescription = "Back Arrow"
         )

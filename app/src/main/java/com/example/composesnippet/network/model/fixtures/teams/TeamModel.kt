@@ -5,6 +5,6 @@ import java.net.URL
 data class TeamModel(
     val id: Int,
     val name: String,
-    val logo: URL,
+    val logo: String,
     val winner: Boolean?
 )

@@ -59,13 +59,14 @@ class FixturesListViewModel @Inject constructor(
                 .format(date)
         ).map {
             FixturesListItemUiState(
-                FixturesListItemTeamUiState(
+                id = it.fixture.id,
+                home = FixturesListItemTeamUiState(
                     it.teams.home.name,
                     it.goals.home,
                     it.teams.home.winner,
                     it.teams.home.logo
                 ),
-                FixturesListItemTeamUiState(
+                away = FixturesListItemTeamUiState(
                     it.teams.away.name,
                     it.goals.away,
                     it.teams.away.winner,

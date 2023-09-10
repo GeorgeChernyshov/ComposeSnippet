@@ -1,7 +1,7 @@
 package com.example.composesnippet.ui.navigation
 
 import androidx.navigation.NamedNavArgument
-import com.example.composesnippet.ui.composables.Screen
+import com.example.composesnippet.ui.composables.common.Screen
 
 object FixtureListNavigation : NavigationCommand {
     override val arguments = emptyList<NamedNavArgument>()

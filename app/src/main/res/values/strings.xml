@@ -2,9 +2,16 @@
     <string name="app_name">Compose Snippet</string>
     <string name="home_logo_description">Home team logo</string>
     <string name="away_logo_description">Guest team logo</string>
+    <string name="team_logo_description">Team logo</string>
 
     <!-- Screen labels -->
     <string name="label_fixtures">fixtures</string>
     <string name="label_teams">teams</string>
     <string name="label_tournaments">tournaments</string>
+
+    <!-- Fixture details info lines -->
+    <string name="fixture_details_info_referee">Referee:</string>
+    <string name="fixture_details_info_status">Status:</string>
+    <string name="fixture_details_info_venue_city">City:</string>
+    <string name="fixture_details_info_venue_name">Venue name:</string>
 </resources>

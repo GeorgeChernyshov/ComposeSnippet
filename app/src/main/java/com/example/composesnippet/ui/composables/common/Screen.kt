@@ -1,4 +1,4 @@
-package com.example.composesnippet.ui.composables
+package com.example.composesnippet.ui.composables.common
 
 import androidx.annotation.StringRes
 import com.example.composesnippet.R

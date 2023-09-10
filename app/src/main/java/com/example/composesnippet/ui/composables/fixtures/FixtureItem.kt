@@ -1,6 +1,5 @@
-package com.example.composesnippet.ui.composables
+package com.example.composesnippet.ui.composables.fixtures
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -8,16 +7,17 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
+import coil.compose.AsyncImage
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
 import com.example.composesnippet.R
+import com.example.composesnippet.ui.theme.ComposeSnippetTheme
 import com.example.composesnippet.ui.theme.Shapes
 import com.example.composesnippet.ui.uistate.fixtures.FixturesListItemTeamUiState
 import com.example.composesnippet.ui.uistate.fixtures.FixturesListItemUiState
@@ -33,7 +33,7 @@ fun FixtureItem(
             .wrapContentHeight()
             .fillMaxWidth()
             .padding(16.dp, 8.dp)
-            .clickable { onItemClick.invoke(uiState.home.score) },
+            .clickable { onItemClick.invoke(uiState.id) },
         shape = Shapes.medium,
         color = MaterialTheme.colors.surface
     ) {
@@ -42,9 +42,10 @@ fun FixtureItem(
                 .fillMaxWidth()
                 .padding(16.dp, 8.dp)
         ) {
-            GlideImage(
+            AsyncImage(
                 model = uiState.home.logo,
                 contentDescription = LocalContext.current.getString(R.string.home_logo_description),
+                contentScale = ContentScale.FillBounds,
                 modifier = Modifier
                     .width(40.dp)
                     .height(40.dp)
@@ -100,7 +101,7 @@ fun FixtureItem(
                 }
             }
 
-            GlideImage(
+            AsyncImage(
                 model = uiState.away.logo,
                 contentDescription = LocalContext.current.getString(R.string.away_logo_description),
                 modifier = Modifier
@@ -108,6 +109,31 @@ fun FixtureItem(
                     .height(40.dp)
             )
         }
+    }
+}
+
+@Preview
+@Composable
+fun FixtureItemPreview() {
+    ComposeSnippetTheme {
+        FixtureItem(
+            uiState = FixturesListItemUiState(
+                id = 1,
+                home = FixturesListItemTeamUiState(
+                    name = "Tensung",
+                    score = 1,
+                    winner = true,
+                    logo = "https://media-2.api-sports.io/football/teams/5590.png"
+                ),
+                away = FixturesListItemTeamUiState(
+                    name = "RTC",
+                    score = 0,
+                    winner = false,
+                    logo = "https://media-1.api-sports.io/football/teams/19005.png"
+                )
+            ),
+            onItemClick = {}
+        )
     }
 }
 

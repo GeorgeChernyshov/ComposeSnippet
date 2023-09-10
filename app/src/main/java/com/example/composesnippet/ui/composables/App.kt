@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -22,13 +21,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.example.composesnippet.ui.composables.common.Screen
+import com.example.composesnippet.ui.composables.fixtures.FixtureDetailsScreen
+import com.example.composesnippet.ui.composables.fixtures.FixturesListScreen
+import com.example.composesnippet.ui.composables.teams.TeamsListScreen
 import com.example.composesnippet.ui.navigation.FixtureDetailsNavigation
 import com.example.composesnippet.ui.navigation.FixtureListNavigation
 import com.example.composesnippet.ui.navigation.NavigationManager
 import com.example.composesnippet.ui.navigation.UpNavigation
 import com.example.composesnippet.ui.theme.ComposeSnippetTheme
 import com.example.composesnippet.ui.uistate.AppState
-import dagger.Provides
 
 @Composable
 fun App(navigationManager: NavigationManager) {
@@ -53,7 +55,7 @@ fun App(navigationManager: NavigationManager) {
                     route = Screen.Fixtures.route,
                     startDestination = FixtureListNavigation.destination
                 ) {
-                    addFixturesGraph()
+                    addFixturesGraph(navigationManager)
                 }
 
                 composable(Screen.Teams.route) { TeamsListScreen() }
@@ -115,7 +117,7 @@ fun rememberAppState(
 //        addFixturesGraph()
 //    }}
 
-fun NavGraphBuilder.addFixturesGraph() {
+fun NavGraphBuilder.addFixturesGraph(manager: NavigationManager) {
     composable(
         FixtureListNavigation.destination,
         FixtureListNavigation.arguments
@@ -126,6 +128,9 @@ fun NavGraphBuilder.addFixturesGraph() {
         FixtureDetailsNavigation.destination,
         FixtureDetailsNavigation.arguments
     ) {
-        FixtureDetailsScreen(it.arguments?.getInt(FixtureDetailsNavigation.FIXTURE_ID))
+        FixtureDetailsScreen(
+            it.arguments?.getInt(FixtureDetailsNavigation.FIXTURE_ID),
+            manager
+        )
     }
 }

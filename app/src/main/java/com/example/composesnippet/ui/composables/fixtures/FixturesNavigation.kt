@@ -1,4 +1,4 @@
-package com.example.composesnippet.ui.composables
+package com.example.composesnippet.ui.composables.fixtures
 
 import androidx.compose.runtime.Composable
 

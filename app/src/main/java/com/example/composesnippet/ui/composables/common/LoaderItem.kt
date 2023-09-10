@@ -1,4 +1,4 @@
-package com.example.composesnippet.ui.composables
+package com.example.composesnippet.ui.composables.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

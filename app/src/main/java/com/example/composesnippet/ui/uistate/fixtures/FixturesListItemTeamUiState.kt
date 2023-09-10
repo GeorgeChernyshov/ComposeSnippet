@@ -6,5 +6,5 @@ data class FixturesListItemTeamUiState(
     val name: String,
     val score: Int,
     val winner: Boolean?,
-    val logo: URL
+    val logo: String
 )

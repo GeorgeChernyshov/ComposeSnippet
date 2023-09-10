@@ -2,7 +2,7 @@ package com.example.composesnippet.ui.navigation
 
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.example.composesnippet.ui.composables.Screen
+import com.example.composesnippet.ui.composables.common.Screen
 
 object FixtureDetailsNavigation : NavigationCommand {
 

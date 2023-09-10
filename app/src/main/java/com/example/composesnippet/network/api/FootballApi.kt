@@ -3,6 +3,8 @@ package com.example.composesnippet.network.api
 import com.example.composesnippet.network.model.fixtures.FixturesResponse
 import com.example.composesnippet.network.model.status.StatusModel
 import com.example.composesnippet.network.model.status.StatusResponse
+import com.example.composesnippet.network.model.teams.TeamModel
+import com.example.composesnippet.network.model.teams.TeamsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -34,4 +36,9 @@ interface FootballApi {
     suspend fun getFixtureDetails(
         @Query("id") id: Int,
     ): FixturesResponse
+
+    @GET("teams")
+    suspend fun getTeams(
+        @Query("id") league: Int?,
+    ) : TeamsResponse
 }

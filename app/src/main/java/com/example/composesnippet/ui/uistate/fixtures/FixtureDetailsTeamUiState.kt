@@ -17,11 +17,11 @@ data class FixtureDetailsTeamUiState(
             logo = null
         )
 
-        fun from(model: TeamModel, score: Int) = FixtureDetailsTeamUiState(
-            name = model.name,
-            score = score,
-            winner = model.winner,
-            logo = model.logo
-        )
+//        fun from(model: TeamModel, score: Int) = FixtureDetailsTeamUiState(
+//            name = model.name,
+//            score = score,
+//            winner = model.winner,
+//            logo = model.logo
+//        )
     }
 }
